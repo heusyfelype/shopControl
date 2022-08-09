@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id       Int      @id @default(autoincrement())
+  name     String
+  email    String   @unique
+  password String
+  Buying   Buying[]
+  Bought   Bought[]
+
+  @@map("users")
+}
+
+model Buying {
+  id         Int           @id @default(autoincrement())
+  userId     Int
+  user       Users         @relation(fields: [userId], references: [id])
+  statusText StatusOptions
+  nameText   String
+  brandText  String
+  vol        Int
+  unitText   UnitsOptions  @default(g)
+  qtt        Int
+  price      Int
+  createdAt  DateTime      @default(now())
+
+  @@map("buying")
+}
+
+enum StatusOptions {
+  default
+  bought
+  not_bought
+}
+
+enum UnitsOptions {
+  g
+  ml
+}
+
+model Status {
+  id   Int           @id @default(autoincrement())
+  name StatusOptions
+
+  Bought Bought[]
+
+  @@map("status")
+}
+
+model Brands {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  items  Items[]
+  Bought Bought[]
+
+  @@map("brands")
+}
+
+model Units {
+  id   Int          @id @default(autoincrement())
+  name UnitsOptions
+
+  items  Items[]
+  Bought Bought[]
+
+  @@map("units")
+}
+
+model Items {
+  id        Int      @id @default(autoincrement())
+  name      String
+  brandId   Int
+  brand     Brands   @relation(fields: [brandId], references: [id])
+  vol       Int
+  unitId    Int
+  unit      Units    @relation(fields: [unitId], references: [id])
+  timesUsed Int
+  createdAt DateTime @default(now())
+
+  Bought Bought[]
+
+  @@map("items")
+}
+
+model Bought {
+  id        Int      @id @default(autoincrement())
+  name      String
+  userId    Int
+  user      Users    @relation(fields: [userId], references: [id])
+  statusId  Int
+  status    Status   @relation(fields: [statusId], references: [id])
+  itemId    Int
+  item      Items    @relation(fields: [itemId], references: [id])
+  brandId   Int
+  brand     Brands   @relation(fields: [brandId], references: [id])
+  vol       Int
+  unitId    Int
+  unit      Units    @relation(fields: [unitId], references: [id])
+  qtt       Int
+  price     Int
+  createdAt DateTime @default(now())
+
+  @@map("bought")
+}
