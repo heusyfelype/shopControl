@@ -1,12 +1,12 @@
 import { Users } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import * as usrRepository from "../repository/usrRepository.js";
+import { usrRepository } from "../repository/usrRepository.js";
 
 export type registerUserType = Omit<Users, "id" | "createdAt">
-export type loginUserType = Omit<Users, "id" | "createdAt" | "name">
+export type signinUserType = Omit<Users, "id" | "createdAt" | "name">
 
-export async function create(infos: registerUserType) {
+async function create(infos: registerUserType) {
     const hasUser = await usrRepository.selectUserByEmail(infos.email)
     if (hasUser) {
         throw { type: "conflict", message: "Email já cadastrado" }
@@ -16,7 +16,7 @@ export async function create(infos: registerUserType) {
     await usrRepository.createUser(infos)
 }
 
-export async function signin(infos: loginUserType) {
+async function signin(infos: signinUserType) {
     const user = await usrRepository.selectUserByEmail(infos.email)
     if (!user) {
         throw { type: "unauthorized", message: "Usuário não cadastrado!" }
@@ -27,4 +27,9 @@ export async function signin(infos: loginUserType) {
         return { token, userId: user.id }
     }
     throw { type: "unauthorized", message: "Email ou senha incorretos!" }
+}
+
+export const usrService = {
+    create,
+    signin
 }

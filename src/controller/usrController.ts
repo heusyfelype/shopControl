@@ -1,20 +1,21 @@
 
 import { Request, Response } from "express";
+import * as usrService from "../service/usrService.js"
 
-export async function create(req:Request, res:Response) {
+export async function create(req: Request, res: Response) {
 
-    const infos  = req.body
-    // await registerUserService(infos)
+    const infos : usrService.registerUserType = req.body
+    await usrService.create(infos)
 
     res.sendStatus(201);
 }
 
-export async function signin(req:Request, res:Response) {
+export async function signin(req: Request, res: Response) {
 
-    const infos  = req.body
-    // const tokenAndUserId = await signInService(infos)
+    const infos: usrService.signinUserType = req.body
+    const tokenAndUserId = await usrService.signin(infos)
 
-    // res.locals.token = tokenAndUserId.token
-    // res.send(tokenAndUserId); 
+    res.locals.token = tokenAndUserId.token
+    res.send(tokenAndUserId);
 
 }
