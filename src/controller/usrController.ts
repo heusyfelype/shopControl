@@ -1,10 +1,10 @@
 
 import { Request, Response } from "express";
-import * as usrService from "../service/usrService.js"
+import { registerUserType, signinUserType, usrService } from "../service/usrService.js";
 
 export async function create(req: Request, res: Response) {
 
-    const infos : usrService.registerUserType = req.body
+    const infos : registerUserType = req.body
     await usrService.create(infos)
 
     res.sendStatus(201);
@@ -12,10 +12,9 @@ export async function create(req: Request, res: Response) {
 
 export async function signin(req: Request, res: Response) {
 
-    const infos: usrService.signinUserType = req.body
-    const tokenAndUserId = await usrService.signin(infos)
+    const infos: signinUserType = req.body
+    const token = await usrService.signin(infos)
 
-    res.locals.token = tokenAndUserId.token
-    res.send(tokenAndUserId);
+    res.send(token);
 
 }

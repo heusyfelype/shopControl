@@ -24,7 +24,7 @@ async function signin(infos: signinUserType) {
     if (bcrypt.compareSync(infos.password, user.password)) {
         const expireConfig = { expiresIn: 60 * 60 * 12 }
         const token = jwt.sign({ data: { userId: user.id } }, process.env.JWT_SECRET, expireConfig)
-        return { token, userId: user.id }
+        return { token }
     }
     throw { type: "unauthorized", message: "Email ou senha incorretos!" }
 }

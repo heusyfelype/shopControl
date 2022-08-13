@@ -4,7 +4,6 @@ import { registerUserType } from "../service/usrService.js";
 
 
 async function selectUserByEmail(email: string) {
-    console.log("está vindo no selectUserBYEmail")
     return await prisma.users.findFirst({ where: { email } })
 }
 
