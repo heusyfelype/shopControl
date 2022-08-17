@@ -4,9 +4,10 @@ import { buyingType, buyinService } from "../service/buyingService.js";
 async function upsert(req:Request, res: Response) {
     const infos = req.body
 
-    const data = await buyinService.upsertItem(infos)
+    const status = await buyinService.upsertItem(infos)
+    console.log("controller: ", status)
 
-    res.sendStatus(201);
+    res.sendStatus(status);
 
 }
 
