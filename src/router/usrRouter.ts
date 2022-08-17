@@ -8,4 +8,5 @@ const usrRouter = Router();
 usrRouter.post("/signup", validateSchemas(signupSchema), usrController.create)
 usrRouter.post("/signin", validateSchemas(signinSchema), usrController.signin)
 
+
 export default usrRouter
