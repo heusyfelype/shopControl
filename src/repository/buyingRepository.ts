@@ -40,7 +40,17 @@ async function update(infos: buyingType) {
     return 202;
 }
 
+async function deleteItem(id: number) {
+    await prisma.buying.delete({ where: { id } })
+}
+
+async function findItemById(id: number) {
+    return await prisma.buying.findFirst({ where: { id } })
+}
+
 export const buyingRepository = {
     create,
-    update
+    update,
+    deleteItem,
+    findItemById
 }

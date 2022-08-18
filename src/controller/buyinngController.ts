@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { buyingType, buyinService } from "../service/buyingService.js";
 
-async function upsert(req:Request, res: Response) {
+async function upsert(req: Request, res: Response) {
     const infos = req.body
 
     const status = await buyinService.upsertItem(infos)
@@ -11,6 +11,17 @@ async function upsert(req:Request, res: Response) {
 
 }
 
+async function deleteItem(req: Request, res: Response) {
+    const id: number = req.body.id
+    const { userId } = res.locals.userData.data
+
+    await buyinService.deleteItem(id, userId)
+
+    res.sendStatus(200);
+
+}
+
 export const buyingController = {
-    upsert
+    upsert,
+    deleteItem
 }

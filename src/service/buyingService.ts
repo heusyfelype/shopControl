@@ -1,4 +1,4 @@
-import { Buying } from "@prisma/client"
+import { Buying, prisma } from "@prisma/client"
 import { buyingRepository } from "../repository/buyingRepository.js"
 
 export type buyingType = Omit<Buying , "createdAt">
@@ -14,6 +14,15 @@ async function upsertItem(infos:buyingType) {
     return status;
 }
 
+async function deleteItem(id:number, userId:number) {
+    const item = await buyingRepository.findItemById(id);
+    if(item.userId != userId){
+        throw {type:"unauthorized", message:"You have not authorization to delete this element!"}
+    }
+    await buyingRepository.deleteItem(id)
+}
+
 export const buyinService = {
-    upsertItem
+    upsertItem,
+    deleteItem
 }
