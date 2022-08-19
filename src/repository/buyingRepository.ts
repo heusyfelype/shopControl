@@ -48,9 +48,14 @@ async function findItemById(id: number) {
     return await prisma.buying.findFirst({ where: { id } })
 }
 
+async function findMany(userId: number) {
+    return await prisma.buying.findMany({ where: { userId } })
+}
+
 export const buyingRepository = {
     create,
     update,
     deleteItem,
-    findItemById
+    findItemById,
+    findMany
 }

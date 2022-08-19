@@ -21,7 +21,15 @@ async function deleteItem(req: Request, res: Response) {
 
 }
 
+async function getItems(req: Request, res:Response) {
+    const { userId } = res.locals.userData.data
+    const items = await buyinService.findMany(userId)
+
+    res.send(items)
+}
+
 export const buyingController = {
     upsert,
-    deleteItem
+    deleteItem,
+    getItems
 }

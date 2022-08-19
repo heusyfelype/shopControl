@@ -22,7 +22,12 @@ async function deleteItem(id:number, userId:number) {
     await buyingRepository.deleteItem(id)
 }
 
+async function findMany(userId:number) {
+    return await buyingRepository.findMany(userId)
+}
+
 export const buyinService = {
     upsertItem,
-    deleteItem
+    deleteItem,
+    findMany
 }

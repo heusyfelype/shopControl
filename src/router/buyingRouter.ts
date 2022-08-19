@@ -8,6 +8,7 @@ import { buyingSchema, deleteItembuyingSchema } from "../schemas/buyingSchema.js
 const buyingRouter = Router();
 
 buyingRouter.post("/buying", validToken, validateSchemas(buyingSchema), buyingController.upsert);
+buyingRouter.get("/buying", validToken, buyingController.getItems)
 buyingRouter.delete("/buying", validToken, validateSchemas(deleteItembuyingSchema), buyingController.deleteItem);
 
 

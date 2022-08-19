@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 export async function validToken(req: Request, res: Response, next: NextFunction) {
-
+    console.log("TOKEN: ", req.headers)
     const auth = req.headers.authorization
     const token = auth?.replace('Bearer ', "");
     if (!token) {
