@@ -24,17 +24,18 @@ model Users {
 }
 
 model Buying {
-  id         Int           @id @default(autoincrement())
-  userId     Int
-  user       Users         @relation(fields: [userId], references: [id])
-  statusText StatusOptions
-  nameText   String
-  brandText  String
-  vol        Int
-  unitText   UnitsOptions  @default(g)
-  qtt        Int
-  price      Int
-  createdAt  DateTime      @default(now())
+  id            Int           @id @default(autoincrement())
+  userId        Int
+  user          Users         @relation(fields: [userId], references: [id])
+  statusText    StatusOptions
+  nameText      String        @default("")
+  brandText     String        @default("")
+  vol           Int           @default(0)
+  unitText      UnitsOptions  @default(g)
+  qtt           Int           @default(0)
+  price         Int           @default(0)
+  positionIndex Int
+  createdAt     DateTime      @default(now())
 
   @@map("buying")
 }
@@ -48,6 +49,7 @@ enum StatusOptions {
 enum UnitsOptions {
   g
   ml
+  unid
 }
 
 model Status {
@@ -115,4 +117,3 @@ model Bought {
 
   @@map("bought")
 }
-

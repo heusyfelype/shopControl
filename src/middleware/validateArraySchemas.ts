@@ -1,10 +1,9 @@
 
-import { ObjectSchema } from "joi";
+import { ArraySchema } from "joi";
 import { NextFunction, Request, Response } from "express";
 
-export function validateSchemas(schema: ObjectSchema ) {
+export function validateArraySchemas(schema: ArraySchema ) {
   function isValidSchema(req: Request, res: Response, next: NextFunction) {
-    console.log(req.body)
     
     const { error } = schema.validate(req.body, { abortEarly: false });
     if (error) {
