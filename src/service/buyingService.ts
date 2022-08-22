@@ -1,4 +1,4 @@
-import { Buying, prisma } from "@prisma/client"
+import { Buying } from "@prisma/client"
 import { buyingRepository } from "../repository/buyingRepository.js"
 
 export type buyingType = Omit<Buying, "createdAt">
@@ -39,7 +39,7 @@ async function updateMany(itemsUpdate: buyingType[], userId: number) {
     await buyingRepository.updateMany(itemsUpdate, userId)
 }
 
-async function deleteManyByUserId(userId:number) {
+async function deleteManyByUserId(userId: number) {
     await buyingRepository.deleteManyByUserId(userId)
 }
 

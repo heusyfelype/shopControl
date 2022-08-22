@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { type } from "os";
 import { buyingType, buyinService } from "../service/buyingService.js";
 
 async function upsert(req: Request, res: Response) {
@@ -8,7 +7,6 @@ async function upsert(req: Request, res: Response) {
 
 
     const status = await buyinService.upsertItem({ ...infos, userId })
-    console.log("controller: ", status)
 
     res.sendStatus(status);
 
